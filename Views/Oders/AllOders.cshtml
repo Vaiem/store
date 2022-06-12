@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Oder>
+@{
+    ViewData["Title"] = "Finish";
+}
+
+<h2>Finish</h2>
+
+@foreach (var item in Model)
+{
+ <div style="background-color:rebeccapurple;border-radius:5%; width:30%;">
+    <p>@item.Name</p>
+    @foreach (var prod in item.products.Select(o => o.ProductQ))
+    {
+        <p>@prod.Name</p>
+    }
+     <form asp-action="MarkShipperd" method="post">
+         <input type="hidden" name="id" value="@item.id"/>
+         <button type="submit">Shipped</button>
+     </form>
+ </div>
+}

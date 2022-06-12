@@ -1,0 +1,24 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "FormTest";
+}
+
+<h2>FormTest</h2>
+<form asp-action="AddProduct" method="post">
+    
+
+    <label asp-for="Name"> Name:</label>
+    <input class="form-control" asp-for="Name" />
+
+    <label asp-for="Description">Description:</label>
+    <input class="form-control" asp-for="Description" />
+
+    <label asp-for="Price">Price:</label>
+    <input class="form-control" asp-for="Price" />
+
+    <label asp-for="Categoria">Categoria:</label>
+    <input class="form-control" asp-for="Categoria" />
+
+    <button type="submit" class="btn btn-danger">отправить</button>
+
+</form>

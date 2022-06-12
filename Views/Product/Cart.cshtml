@@ -1,0 +1,32 @@
+﻿@model Cart
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2>Cart</h2>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+        </tr>
+
+
+        @foreach (var item in Model.lines)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>
+                <form asp-action="RemoveProductCart" asp-controller="Product" method="post">
+                    <input type="hidden" name="id" value="@item.ProductId" />
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+ 
+<a asp-action="OdersAdd" asp-controller="Oders" class="btn btn-primary">Oders</a>
+<p>total:@Model.ResultPrice.ToString()</p>

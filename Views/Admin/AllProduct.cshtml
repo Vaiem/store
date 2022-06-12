@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "AllProduct";
+}
+<h2>AllProduct</h2>
+
+    @foreach (var item in Model)
+    {
+        <div style="text-align:center; background-color:darkgrey;width:400px; border-radius:15px 25px;">
+            <p>@item.Name</p>
+            <form asp-action="Delet" method="post">
+                <a asp-action="Edit" asp-route-productId="@item.ProductId">Edit</a>
+                <input type="hidden" name="ProdId" value="@item.ProductId" />
+                <button type="submit">Delet</button>
+            </form>
+         </div>
+
+     }
+<a asp-action="AddProduct"> add product </a>     
+<a asp-action="LogOut" asp-controller="Account"> logOut</a>
+
+
+
+

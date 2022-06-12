@@ -1,0 +1,24 @@
+﻿@model viewProduct
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>Home</h2>
+<div style="width:100px;background-color: forestgreen;">
+   
+</div>
+<a href="~/Product/Cart" class="btn btn-primary">корзина</a>
+@foreach (var item in Model.prod)
+{
+<div class="text-center" style="background:#E6E6FA; width:700px; border-radius:20px 20px ;margin: auto;">
+    <p>@item.Name</p>
+    <form asp-action="AddCart" method="post">
+        <input type="hidden" name="ProductId" value="@item.ProductId" />
+        <button type="submit" class="btn btn-primary">Add in Cart</button>
+    </form>
+</div>
+    
+}
+
+ 
+<div page-info="@Model.PageInfo" page-action="Home" page-categoria-categoria="@Model.CurrentCategoria"></div>

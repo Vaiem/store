@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="bg-light bg-opacity-100" style="background: repeating-radial-gradient(circle, #B9ECFE, #B9ECFE 10px, #82DDFF 10px, #82DDFF 20px);"><h1>GameStore</h1></div>
+    <ul class="nav nav-pills">
+        <li>
+            <a class="btn btn-outline-primary"asp-action="Home" asp-controller="Product">Домой</a>
+        </li>
+        <li><a class="btn btn-outline-primary"asp-action="Login" asp-controller="Account" >LogIn</a></li>
+      
+        <li><a class="btn btn-outline-primary"asp-action="LogOut" asp-controller="Account">LogOut</a></li>
+    </ul>
+    <div> @await Component.InvokeAsync("Navigation")</div>
+    <div>
+        
+        <div>
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿@model Oder
+@{
+    ViewData["Title"] = "OdersAdd";
+}
+
+<h2>OdersAdd</h2>
+
+<form asp-action="OdersAdd" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div style="background-color:darkkhaki; border-radius:20%; width:50%;height:30%;">
+        <label>Name:</label>
+        <input asp-for="Name" />
+        <br />
+
+        <label>Adress:</label>
+        <input asp-for="Adress" />
+        <br />
+
+        <label>City:</label>
+        <input asp-for="City" />
+        <br />
+    </div>
+    <button type="submit">buy</button>
+</form>
+
