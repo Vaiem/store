@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Store.Models
 {
@@ -14,30 +15,41 @@ namespace Store.Models
         }
         public IQueryable<Product> products => Db.Products;
 
-        public void AddProduct (Product prod)
+        public void AddProduct(Product prod)
         {
-           
-            Db.Products.Add(prod);
-            Db.SaveChanges();
+
+             Db.Products.Add(prod);
+            int res2 = Thread.CurrentThread.ManagedThreadId;
+             Db.SaveChanges();
         }
 
-        public void UpdateProduct(Product upProduct)
+        public async Task AddProductAsync (Product prod)
         {
-            var prod = Db.Products.FirstOrDefault(o => o.ProductId == upProduct.ProductId);
+            
+            await Db.Products.AddAsync(prod);
+            int res2 = Thread.CurrentThread.ManagedThreadId;
+            await Db.SaveChangesAsync();
+        }
+
+        public async Task UpdateProductAsync(Product upProduct)
+        {
+            var prod = await Task.Run(()=> Db.Products.FirstOrDefault(o => o.ProductId == upProduct.ProductId));
             if (prod != null)
             {
                prod.Name = upProduct.Name;
                 prod.Description = upProduct.Description;
                 prod.Categoria = upProduct.Categoria;
                 prod.Price = upProduct.Price;
-                Db.SaveChanges();
+                await Db.SaveChangesAsync();
             }
+            
         }
 
-        public void DeletProduct(int ProdId)
+        public async Task DeletProductAsync(int ProdId)
         {
-            Db.Products.Remove(Db.Products.FirstOrDefault(o => o.ProductId == ProdId));
-            Db.SaveChanges();
+          await Task.Run(()=>  Db.Products.Remove(Db.Products.FirstOrDefault(o => o.ProductId == ProdId)));
+           await Db.SaveChangesAsync();
+            
         }
 
 

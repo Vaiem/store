@@ -10,10 +10,11 @@ namespace Store.Models
         IQueryable<Product> products { get; }
 
         void AddProduct(Product prod);
+        Task AddProductAsync (Product prod);
 
-        void UpdateProduct(Product upProduct);
+        Task UpdateProductAsync(Product upProduct);
 
-        void DeletProduct(int ProdId);
+        Task DeletProductAsync(int ProdId);
 
     }
 }

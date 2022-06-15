@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Store.Models
 {
@@ -15,16 +16,17 @@ namespace Store.Models
         }
         public IQueryable<Oder> AllOders => context.OdersDB.Include(o => o.products).ThenInclude(o => o.ProductQ);
          
-        public void SaveOder(Oder oder)
+        public async Task SaveOder(Oder oder)
         {
             context.AttachRange(oder.products.Select(o => o.ProductQ));
             if (oder.id == 0)
             {
                
                 
-                context.Add(oder);
+               await context.AddAsync(oder);
             }
-            context.SaveChanges();
+          await context.SaveChangesAsync();
+               
         }
     }
 }

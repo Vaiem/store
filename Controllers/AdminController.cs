@@ -7,6 +7,7 @@ using Store.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading;
 
 namespace Store.Controllers
 {
@@ -30,10 +31,14 @@ namespace Store.Controllers
 
         public ViewResult AddProduct() => View();
         [HttpPost]
-        public IActionResult AddProduct(Product sasa)
+        public async Task<IActionResult> AddProduct(Product sasa)
         {
-            reposytory.AddProduct(sasa);
-            return RedirectToAction("Index");
+            int res2 = Thread.CurrentThread.ManagedThreadId;
+           
+               
+            await  reposytory.AddProductAsync(sasa);
+            int res3 = Thread.CurrentThread.ManagedThreadId;
+            return RedirectToAction("AllProduct");
         }
 
         [HttpGet]
@@ -43,11 +48,11 @@ namespace Store.Controllers
             return View(upprod);
         }
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public async Task<IActionResult> Edit(Product product)
         {
             if (ModelState.IsValid)
             {
-                reposytory.UpdateProduct(product);
+              await  reposytory.UpdateProductAsync(product);
                 return RedirectToAction("AllProduct");
 
             }
@@ -58,10 +63,10 @@ namespace Store.Controllers
             
         }
         [HttpPost]
-        public IActionResult Delet(int ProdId)
+        public async Task<IActionResult> Delet(int ProdId)
         {
-            reposytory.DeletProduct(ProdId);
-            return RedirectToAction("AllProduct");
+           await reposytory.DeletProductAsync(ProdId);
+           return RedirectToAction("AllProduct");
         }
     }
 }

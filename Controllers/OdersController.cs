@@ -24,7 +24,7 @@ namespace Store.Controllers
             
         
         [HttpPost]
-        public IActionResult OdersAdd(Oder oder)
+        public async Task<IActionResult> OdersAdd(Oder oder)
         {
             
             if (cart.lines.Count()==0)
@@ -39,7 +39,7 @@ namespace Store.Controllers
                     var productsOder = new productsToOder { OderQ = oder, ProductQ = item };
                     oder.products.Add(productsOder);
                 }
-                odersContextDb.SaveOder(oder);
+               await odersContextDb.SaveOder(oder);
                 return Redirect("~/Oders/AllOders ");
             }
             return View();
@@ -54,11 +54,11 @@ namespace Store.Controllers
         
         [HttpPost]
         [Authorize]
-        public IActionResult MarkShipperd(int id)
+        public async Task<IActionResult> MarkShipperd(int id)
         {
             var oder =odersContextDb.AllOders.FirstOrDefault(o => o.id == id);
             oder.Shipped = true;
-            odersContextDb.SaveOder(oder);
+            await odersContextDb.SaveOder(oder);
             return RedirectToAction("AllOders");
         }
          

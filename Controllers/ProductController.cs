@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Store.Models;
 using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace Store.Controllers
 {
@@ -18,8 +19,11 @@ namespace Store.Controllers
             reposytory = repos;
             Carts = serviceCart;
         }
-        public ViewResult Home(string categoria, int ProductPage = 1) => View(new viewProduct {
-            prod = reposytory.products.Where(o => categoria == null || o.Categoria == categoria).Skip((ProductPage - 1) * ElementPage).Take(ElementPage),
+        public async Task<IActionResult> Home(string categoria, int ProductPage = 1) => View(new viewProduct {
+            prod = await Task.Run(()=> reposytory.products.
+              Where(o => categoria == null || o.Categoria == categoria).
+              Skip((ProductPage - 1) * ElementPage).
+              Take(ElementPage)),
             PageInfo = new PageInfo
             {
                 AllCountElemnts = reposytory.products.Where(o => categoria == null || o.Categoria == categoria).Count(),
@@ -29,7 +33,7 @@ namespace Store.Controllers
             },
             CurrentCategoria = categoria,
 
-            AllProd = reposytory.products
+            AllProd = await Task.Run(() => reposytory.products)
 
         });
 
